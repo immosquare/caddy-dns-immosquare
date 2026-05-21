@@ -27,6 +27,8 @@ For local development with an unreleased version:
 xcaddy build --with github.com/immosquare/caddy-dns-immosquare=.
 ```
 
+A `build.sh` helper at the repo root installs `xcaddy` if missing and builds against `@latest` — useful for quick smoke tests against the published version.
+
 ## Configuration
 
 The provider accepts two configuration options:
