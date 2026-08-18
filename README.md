@@ -1,3 +1,10 @@
+---
+locale: en
+tags:
+  - app:caddy-dns-immosquare
+  - audience:technique
+---
+
 immosquare DNS module for Caddy
 ===========================
 
