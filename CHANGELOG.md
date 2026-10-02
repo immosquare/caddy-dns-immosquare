@@ -4,7 +4,7 @@
 
 ### Changed
 
-- Merge `libdns-immosquare` into this module: a single `Provider` type implements both the libdns interfaces and the Caddy module, in the package `immosquare`
+- Implement the libdns interfaces in this module: a single `Provider` type, in the package `immosquare`, is both the libdns provider and the Caddy module, with no separate provider dependency
 - Depend on `github.com/libdns/libdns` v1.1.0 directly
 - Build typed records with `libdns.RR.Parse` instead of hand-written parsing
 - Require the `endpoint` option in the Caddyfile, so a missing value fails at load time
@@ -18,7 +18,7 @@
 
 ### Changed
 
-- Update `libdns-immosquare` from v1.0.3 to v1.0.4
+- Update the libdns provider dependency from v1.0.3 to v1.0.4
 - Update `caddy` from v2.10.0 to v2.10.2 and indirect dependencies
 
 ## [1.0.8] - 2025-07-10
