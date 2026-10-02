@@ -21,7 +21,7 @@ const Version = "1.1.0"
 const defaultMinTTL = 120 * time.Second
 
 // Provider manages the DNS records of the zones served by immosquare through
-// the monitoring API (api/dns). It implements the libdns interfaces and is
+// the immosquare DNS API. It implements the libdns interfaces and is
 // registered as the Caddy module dns.providers.immosquare (see module.go).
 type Provider struct {
   APIToken string `json:"api_token,omitempty"`
