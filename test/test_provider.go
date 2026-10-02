@@ -7,7 +7,7 @@ import (
 	"net/netip"
 	"os"
 	"time"
-	
+
 	immosquare "github.com/immosquare/caddy-dns-immosquare"
 	"github.com/libdns/libdns"
 )
@@ -30,7 +30,7 @@ func main() {
 	}
 
 	ctx := context.Background()
-	zone := "example.com" 
+	zone := "example.com"
 
 	fmt.Println("=== Testing immosquare DNS provider ===")
 
@@ -62,19 +62,19 @@ func main() {
 		fmt.Printf("✅ %d records added\n", len(addedRecords))
 		for i, record := range addedRecords {
 			rr := record.RR()
-			fmt.Printf("  %d. %s %s %s (TTL: %s)\n", 
+			fmt.Printf("  %d. %s %s %s (TTL: %s)\n",
 				i+1, rr.Name, rr.Type, rr.Data, rr.TTL)
 		}
 	}
 
 	// Test 3: Use SetRecords to define all records
 	fmt.Println("\n3. Testing SetRecords (replace the given RRsets only)...")
-	
+
 	// Create valid IP addresses
 	ip1, _ := netip.ParseAddr("192.99.250.180")
 	ip2, _ := netip.ParseAddr("192.99.250.181")
 	ip3, _ := netip.ParseAddr("192.99.250.182")
-	
+
 	setRecords := []libdns.Record{
 		libdns.Address{
 			Name: "www",
@@ -100,7 +100,7 @@ func main() {
 		fmt.Printf("✅ %d records defined\n", len(updatedRecords))
 		for i, record := range updatedRecords {
 			rr := record.RR()
-			fmt.Printf("  %d. %s %s %s (TTL: %s)\n", 
+			fmt.Printf("  %d. %s %s %s (TTL: %s)\n",
 				i+1, rr.Name, rr.Type, rr.Data, rr.TTL)
 		}
 	}
@@ -124,14 +124,14 @@ func main() {
 
 	// Test 5: Test with different record types
 	fmt.Println("\n5. Testing with different record types...")
-	
+
 	// CNAME record
 	cnameRecord := libdns.CNAME{
 		Name:   "www2",
 		Target: "www.example.com",
 		TTL:    300 * time.Second,
 	}
-	
+
 	// MX record
 	mxRecord := libdns.MX{
 		Name:       "@",
@@ -139,16 +139,16 @@ func main() {
 		Target:     "mail.example.com",
 		TTL:        600 * time.Second,
 	}
-	
+
 	// NS record
 	nsRecord := libdns.NS{
 		Name:   "@",
 		Target: "ns1.example.com",
 		TTL:    86400 * time.Second,
 	}
-	
+
 	mixedRecords := []libdns.Record{cnameRecord, mxRecord, nsRecord}
-	
+
 	addedMixedRecords, err := provider.AppendRecords(ctx, zone, mixedRecords)
 	if err != nil {
 		log.Printf("AppendRecords error (mixed types): %v", err)
@@ -156,10 +156,10 @@ func main() {
 		fmt.Printf("✅ %d mixed records added\n", len(addedMixedRecords))
 		for i, record := range addedMixedRecords {
 			rr := record.RR()
-			fmt.Printf("  %d. %s %s %s (TTL: %s)\n", 
+			fmt.Printf("  %d. %s %s %s (TTL: %s)\n",
 				i+1, rr.Name, rr.Type, rr.Data, rr.TTL)
 		}
 	}
 
 	fmt.Println("\n=== Test completed ===")
-} 
+}
