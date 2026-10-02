@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.1.0] - 2026-10-02
+
+### Changed
+
+- Merge `libdns-immosquare` into this module: a single `Provider` type implements both the libdns interfaces and the Caddy module, in the package `immosquare`
+- Depend on `github.com/libdns/libdns` v1.1.0 directly
+- Build typed records with `libdns.RR.Parse` instead of hand-written parsing
+- Require the `endpoint` option in the Caddyfile, so a missing value fails at load time
+
+### Fixed
+
+- Return every non-2xx API answer as an error (`DeleteRecords` used to swallow failures and leave stale `_acme-challenge` records behind)
+- Read the fields the API serves in `GetRecords` (`data`, `preference`, `target`) and return names relative to the zone
+
 ## [1.0.9] - 2026-02-10
 
 ### Changed
