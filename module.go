@@ -3,11 +3,7 @@ package immosquare
 import (
   "github.com/caddyserver/caddy/v2"
   "github.com/caddyserver/caddy/v2/caddyconfig/caddyfile"
-  libdnsimmosquare "github.com/immosquare/libdns-immosquare"
 )
-
-// Provider lets Caddy read and manipulate DNS records hosted by this DNS provider.
-type Provider struct{ *libdnsimmosquare.Provider }
 
 func init() {
   caddy.RegisterModule(Provider{})
@@ -17,30 +13,30 @@ func init() {
 func (Provider) CaddyModule() caddy.ModuleInfo {
   return caddy.ModuleInfo{
     ID:  "dns.providers.immosquare",
-    New: func() caddy.Module { return &Provider{new(libdnsimmosquare.Provider)} },
+    New: func() caddy.Module { return new(Provider) },
   }
 }
 
 // Provision sets up the module. Implements caddy.Provisioner.
 func (p *Provider) Provision(ctx caddy.Context) error {
-  p.Provider.APIToken = caddy.NewReplacer().ReplaceAll(p.Provider.APIToken, "")
-  p.Provider.Endpoint = caddy.NewReplacer().ReplaceAll(p.Provider.Endpoint, "")
+  p.APIToken = caddy.NewReplacer().ReplaceAll(p.APIToken, "")
+  p.Endpoint = caddy.NewReplacer().ReplaceAll(p.Endpoint, "")
   return nil
 }
 
-// TODO: This is just an example. Update accordingly.
 // UnmarshalCaddyfile sets up the DNS provider from Caddyfile tokens. Syntax:
 //
-// immosquare [<api_token>] {
-//     api_token <api_token>
-//     endpoint <endpoint>
-// }
+//	immosquare [<api_token>] {
+//	    api_token <api_token>
+//	    endpoint  <endpoint>
+//	}
 //
-// **THIS IS JUST AN EXAMPLE AND NEEDS TO BE CUSTOMIZED.**
+// Both the API token and the endpoint are required: a missing value fails
+// when the configuration loads instead of at the first ACME challenge.
 func (p *Provider) UnmarshalCaddyfile(d *caddyfile.Dispenser) error {
   for d.Next() {
     if d.NextArg() {
-      p.Provider.APIToken = d.Val()
+      p.APIToken = d.Val()
     }
     if d.NextArg() {
       return d.ArgErr()
@@ -48,21 +44,21 @@ func (p *Provider) UnmarshalCaddyfile(d *caddyfile.Dispenser) error {
     for nesting := d.Nesting(); d.NextBlock(nesting); {
       switch d.Val() {
       case "api_token":
-        if p.Provider.APIToken != "" {
+        if p.APIToken != "" {
           return d.Err("API token already set")
         }
         if d.NextArg() {
-          p.Provider.APIToken = d.Val()
+          p.APIToken = d.Val()
         }
         if d.NextArg() {
           return d.ArgErr()
         }
       case "endpoint":
-        if p.Provider.Endpoint != "" {
+        if p.Endpoint != "" {
           return d.Err("endpoint already set")
         }
         if d.NextArg() {
-          p.Provider.Endpoint = d.Val()
+          p.Endpoint = d.Val()
         }
         if d.NextArg() {
           return d.ArgErr()
@@ -72,14 +68,18 @@ func (p *Provider) UnmarshalCaddyfile(d *caddyfile.Dispenser) error {
       }
     }
   }
-  if p.Provider.APIToken == "" {
+  if p.APIToken == "" {
     return d.Err("missing API token")
+  }
+  if p.Endpoint == "" {
+    return d.Err("missing endpoint")
   }
   return nil
 }
 
 // Interface guards
 var (
+  _ caddy.Module          = (*Provider)(nil)
   _ caddyfile.Unmarshaler = (*Provider)(nil)
   _ caddy.Provisioner     = (*Provider)(nil)
 )
