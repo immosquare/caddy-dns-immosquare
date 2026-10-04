@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Go module that is both the Caddy DNS provider module `dns.providers.immosquare` and a `libdns` provider, backed by the immosquare DNS API. `README.md` covers configuration, behavior and the HTTP contract.
+Go module that is both the Caddy DNS provider module `dns.providers.immosquare` and a `libdns` provider, backed by the immosquare (app) DNS API. `README.md` covers configuration, behavior and the HTTP contract.
 
 - **provider.go**: the `Provider` type and the four libdns operations, each mapped to one API call (`GET`, `POST`, `PUT`, `DELETE` on `/zones/{zone}/records`)
 - **module.go**: registers the same `Provider` as the Caddy module (Caddyfile parsing, placeholder replacement)

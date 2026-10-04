@@ -8,7 +8,7 @@ tags:
 
 # immosquare DNS provider for Caddy and libdns
 
-`caddy-dns-immosquare` is a Go module with two roles. It is the Caddy DNS provider module `dns.providers.immosquare`, which lets [Caddy](https://github.com/caddyserver/caddy) solve ACME DNS-01 challenges, the only challenge that yields wildcard certificates. It is also a [`libdns`](https://github.com/libdns/libdns) provider that any Go program can use to read and write DNS records. Both roles talk to a single backend, the immosquare DNS API. This page covers who the provider is for, building Caddy with it, configuring it, using it from Go, how it behaves, the HTTP contract it relies on, and how to test it.
+`caddy-dns-immosquare` is a Go module with two roles. It is the Caddy DNS provider module `dns.providers.immosquare`, which lets [Caddy](https://github.com/caddyserver/caddy) solve ACME DNS-01 challenges, the only challenge that yields wildcard certificates. It is also a [`libdns`](https://github.com/libdns/libdns) provider that any Go program can use to read and write DNS records. Both roles talk to a single backend, the immosquare DNS API, which is exposed by the immosquare application. This page covers who the provider is for, building Caddy with it, configuring it, using it from Go, how it behaves, the HTTP contract it relies on, and how to test it.
 
 ## Who can use the immosquare DNS provider
 

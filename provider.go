@@ -54,7 +54,7 @@ func (p *Provider) initClient() error {
 	return nil
 }
 
-// makeRequest makes an HTTP request to the immosquare API
+// makeRequest makes an HTTP request to the immosquare DNS API
 func (p *Provider) makeRequest(ctx context.Context, method, path string, body interface{}) (*http.Response, error) {
 	if err := p.initClient(); err != nil {
 		return nil, err
