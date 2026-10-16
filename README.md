@@ -1,4 +1,6 @@
 ---
+created_at: "2025-07-10"
+updated_at: "2026-10-04"
 resume: Who can use the immosquare DNS provider, how to build Caddy with it, configure it for ACME DNS-01 challenges, use it as a libdns provider in Go, and the HTTP contract it relies on
 locale: en
 tags:
